@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/crackcomm/nsqueue/producer"
+	"github.com/vincent3i/nsqueue/producer"
 )
 
 var (
 	amount   = flag.Int("amount", 20, "Amount of messages to produce every 100 ms")
-	nsqdAddr = flag.String("nsqd", "127.0.0.1:4150", "nsqd tcp address")
+	nsqdAddr = flag.String("nsqd", "115.28.220.146:4150", "nsqd tcp address")
 )
 
 func main() {

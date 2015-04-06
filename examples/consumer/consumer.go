@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/crackcomm/nsqueue/consumer"
+	"github.com/vincent3i/nsqueue/consumer"
 )
 
 var (
-	nsqdAddr    = flag.String("nsqd", "127.0.0.1:4150", "nsqd http address")
+	nsqdAddr    = flag.String("nsqd", "115.28.220.146:4150", "nsqd http address")
 	maxInFlight = flag.Int("max-in-flight", 30, "Maximum amount of messages in flight to consume")
 )
 

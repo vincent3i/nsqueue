@@ -1,24 +1,24 @@
 package nsqlog
 
 import (
-	"io"
-	"log"
-	"os"
-
-	"github.com/bitly/go-nsq"
+	"github.com/astaxie/beego/logs"
 )
 
-// Logger - Default consumer Logger.
-var Logger *log.Logger
-
-// LogLevel - Default consumer LogLevel.
-var LogLevel = nsq.LogLevelDebug
-
-// SetOutput - Changes Logger to new logger with defined output.
-func SetOutput(output io.Writer) {
-	Logger = log.New(output, "", 0)
+//override Logger,LogLevel in go-nsq
+type NsqLogger struct {
+	*logs.BeeLogger
 }
 
-func init() {
-	SetOutput(os.Stdout)
+func NewNsqLogger() *NsqLogger {
+	nsqLogger := new(NsqLogger)
+	nsqLogger.BeeLogger = logs.NewLogger(1024)
+
+	return nsqLogger
+}
+
+//use debug to write message
+//override calldepth by global config
+func (this *NsqLogger) Output(calldepth int, s string) error {
+	this.Debug("calldepth[%d] %s", calldepth, s)
+	return nil
 }

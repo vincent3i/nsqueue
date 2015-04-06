@@ -1,10 +1,10 @@
 package consumer
 
 import (
-	"log"
-
+	"github.com/astaxie/beego/logs"
 	"github.com/bitly/go-nsq"
-	"github.com/crackcomm/nsqueue/nsqlog"
+	"github.com/vincent3i/nsqueue/nsqlog"
+	"log"
 )
 
 type topicChan struct {
@@ -14,7 +14,7 @@ type topicChan struct {
 
 // Consumer - NSQ messages consumer.
 type Consumer struct {
-	Logger   *log.Logger
+	Logger   *nsqlog.NsqLogger
 	LogLevel *nsq.LogLevel
 
 	handlers map[topicChan]*queue
@@ -101,16 +101,18 @@ func (c *Consumer) Start(debug bool) error {
 
 	return nil
 }
-func (c *Consumer) logger() *log.Logger {
+func (c *Consumer) logger() *nsqlog.NsqLogger {
 	if c.Logger == nil {
-		return nsqlog.Logger
+		return nsqlog.NewNsqLogger()
 	}
 	return c.Logger
 }
 
+//logger level should less than debug level
 func (c *Consumer) loglevel() nsq.LogLevel {
 	if c.LogLevel == nil {
-		return nsqlog.LogLevel
+		//default logger level is debug
+		return logs.LevelDebug
 	}
 	return *c.LogLevel
 }

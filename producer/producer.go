@@ -2,15 +2,15 @@ package producer
 
 import (
 	"encoding/json"
-	"log"
+	"github.com/astaxie/beego/logs"
 
 	"github.com/bitly/go-nsq"
-	"github.com/crackcomm/nsqueue/nsqlog"
+	"github.com/vincent3i/nsqueue/nsqlog"
 )
 
 // Producer inherets the nsq Producer object
 type Producer struct {
-	Logger   *log.Logger
+	Logger   *nsqlog.NsqLogger
 	LogLevel *nsq.LogLevel
 
 	*nsq.Producer
@@ -51,16 +51,16 @@ func (p *Producer) PublishJSON(topic string, v interface{}) error {
 	return p.Publish(topic, body)
 }
 
-func (p *Producer) logger() *log.Logger {
+func (p *Producer) logger() *nsqlog.NsqLogger {
 	if p.Logger == nil {
-		return nsqlog.Logger
+		return nsqlog.NewNsqLogger()
 	}
 	return p.Logger
 }
 
 func (p *Producer) loglevel() nsq.LogLevel {
 	if p.LogLevel == nil {
-		return nsqlog.LogLevel
+		return logs.LevelDebug
 	}
 	return *p.LogLevel
 }
